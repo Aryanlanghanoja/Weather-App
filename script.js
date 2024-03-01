@@ -1,16 +1,16 @@
-var inputvalue = document.querySelector('#cityinput')
-var btn = document.querySelector('#add')
-var city = document.querySelector("#cityoutput")
-var description = document.querySelector('#description')
-var temp = document.querySelector('#temp')
-var wind = document.querySelector('#wind')
-apik = "abd2139615f01706754fbf5118a5bf0f"
+var inputvalue = document.querySelector('#cityinput');
+var btn = document.querySelector('#add');
+var city = document.querySelector("#cityoutput");
+var description = document.querySelector('#description');
+var temp = document.querySelector('#temp');
+var wind = document.querySelector('#wind');
+var apik = "abd2139615f01706754fbf5118a5bf0f";
 
 function convertion(val) {
-    return (val - 273).toFixed(3)
+    return (val - 273).toFixed(3);
 }
 
-btn.addEventListener('click', function () {
+function fetchData() {
     fetch('https://api.openweathermap.org/data/2.5/weather?q=' + inputvalue.value + '&appid=' + apik)
         .then(res => res.json())
         .then(data => {
@@ -25,4 +25,12 @@ btn.addEventListener('click', function () {
             wind.innerHTML = `Wind Speed :- <span>${wndspeed} KMPH</span>`;
         })
         .catch(err => alert('You Entered Wrong City Name'));
+}
+
+btn.addEventListener('click', fetchData);
+
+inputvalue.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        fetchData();
+    }
 });
